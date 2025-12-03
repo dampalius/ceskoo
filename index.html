@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Education Clone Example</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="main-box">
+    <!-- logo -->
+    <img src="images/cec.webp" alt="Logo" class="logo">
+
+    <h3>გადაამოწმეთ პირადი მონაცემები და მისამართი ამომრჩეველთა ერთიან სია</h3>
+    <p class="warning">ვებგვერდი განკუთვნილია მხოლოდ ამომრჩეველთათვის - საკუთარი და ოჯახის წევრების მონაცემების გადასამოწმებლად!</p>
+    <p class="bold-date">(17.09.2025 მდგომარეობით)</p>
+
+    <input id="personal" type="text" inputmode="numeric" maxlength="11" placeholder="პირადი ნომერი" autocomplete="off" />
+    <br />
+    <input id="lastname" type="text" placeholder="გვარი" autocomplete="off" />
+    <br />
+<button id="submitBtn" type="button" style="color: white;">ძებნა</button>
+
+    <!-- Captcha verification box -->
+    <div class="verify-box" id="verifyBox"> 
+      <div class="spinner" id="spinner"></div>
+      <div class="checkmark" id="checkmark">✓</div>
+      <span id="verifyText">Verifying...</span>
+    </div>
+  </div>
+
+  <div class="table-box" id="resultBox">
+    <!-- Desktop table -->
+    <table class="desktop-table">
+      <tr>
+        <th>სურათი</th>
+        <th>გვარი</th>
+        <th>სახელი</th>
+        <th>დაბ.თარიღი</th>
+        <th>ოლქი/უბანი</th>
+        <th>სიაში ნომერი</th>
+        <th>მისამართი</th>
+      </tr>
+      <tr>
+        <td><img src="images/xHz2UHl.png" class="photo" alt="photo"></td>
+        <td>შურღაია</td>
+        <td>რევაზი</td>
+        <td>07.12.2003</td>
+        <td style="background:#a0e8b0;">07.23</td>
+        <td>2380</td>
+        <td>თბილისი გიორგი ჩუბინაშვილის ქ. N 75 ბ. 6 (ყოფ. ორჯონიკიძის ქ.)</td>
+      </tr>
+    </table>
+
+ <!-- Mobile card -->
+ <div class="mobile-card">
+  <img src="images/xHz2UHl.png" alt="photo" class="mobile-photo">
+  <p class="name">შურღაია</p>
+  <p class="name">რევაზი</p>
+  <p>07.12.2003</p>
+  <p style="color: #4cbb78; font: bold;">ელექტრონული</p>
+  <p class="temo">07.23</p>
+  <p>2380</p>
+
+  <p class="address">
+    თბილისი გიორგი ჩუბინაშვილის ქ. N 75 ბ. 6 (ყოფ. ორჯონიკიძის ქ.)
+  </p>
+</div>
+<div class="container-fluid d-flex align-items-center justify-content-center">
+            <div class="row">
+                <button onclick="toggle()" class="more-button">
+                    ამ მისამართზე რეგისტრირებულ ამომრჩეველთა სია
+                    <span style="margin-left: 20px;">
+                        <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.2939 13.2075H13.3905L13.0703 12.8834C14.191 11.5146 14.8656 9.73756 14.8656 7.80446C14.8656 3.494 11.538 0 7.43282 0C3.32762 0 0 3.494 0 7.80446C0 12.1149 3.32762 15.6089 7.43282 15.6089C9.27387 15.6089 10.9663 14.9005 12.2699 13.7238L12.5786 14.06V15.0086L18.2962 21L20 19.211L14.2939 13.2075ZM7.43282 13.2075C4.58548 13.2075 2.28702 10.7942 2.28702 7.80446C2.28702 4.81475 4.58548 2.40137 7.43282 2.40137C10.2802 2.40137 12.5786 4.81475 12.5786 7.80446C12.5786 10.7942 10.2802 13.2075 7.43282 13.2075Z" fill="white"></path>
+                        </svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+
+  <p class="footer-text">© საარჩევნო საამრჩევლო ადმინისტრაცია</p>
+
+  <script>
+    // Input validation regex
+    const personalRegex = /^\d{11}$/;
+    const lastnameRegex = /^[ა-ჰA-Za-z]{3,}$/;
+
+    const personalInput = document.getElementById('personal');
+    const lastnameInput = document.getElementById('lastname');
+    const submitBtn = document.getElementById('submitBtn');
+    const resultBox = document.getElementById('resultBox');
+
+    const spinner = document.getElementById('spinner');
+    const checkmark = document.getElementById('checkmark');
+    const verifyText = document.getElementById('verifyText');
+    let verificationDone = false;
+
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        spinner.style.display = "none";
+        checkmark.style.display = "flex";
+        verifyText.textContent = "Success!";
+        verifyText.style.color = "#4cbb78";
+        verificationDone = true;
+      }, 2000);
+    });
+
+    personalInput.addEventListener('input', e => {
+      e.target.value = e.target.value.replace(/\D+/g, '').slice(0,11);
+    });
+    lastnameInput.addEventListener('input', e => {
+      e.target.value = e.target.value.replace(/[^ა-ჰA-Za-z]+/g, '');
+    });
+
+    submitBtn.addEventListener('click', () => {
+      if (!verificationDone) return;
+
+      const personalVal = personalInput.value.trim();
+      const lastnameVal = lastnameInput.value.trim();
+
+      if (!personalRegex.test(personalVal) || !lastnameRegex.test(lastnameVal)) return;
+
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    [personalInput, lastnameInput].forEach(input => {
+      input.addEventListener('keydown', e => {
+        if (e.key === 'Enter') submitBtn.click();
+      });
+    });
+  </script>
+</body>
+</html> 
