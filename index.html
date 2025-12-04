@@ -1,137 +1,258 @@
-
 <!DOCTYPE html>
 <html lang="ka">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Education Clone Example</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ამომრჩეველთა სია</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #fff;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+    .main-content { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+    .main-box {
+      width: 92%; max-width: 420px; background: #eaf4f0;
+      margin: 30px auto; padding: 35px 15px; border-radius: 45px;
+    }
+
+    .logo { width: 180px; margin-bottom: 20px; }
+    h3 { color: #51ba78; font-size: 16px; font-weight: 600; margin-bottom: 30px; }
+    .warning { color: #bd0027; font-size: 13px; padding: 0 15px; margin-bottom: 50px; }
+    .bold-date { font-weight: bold; font-size: 14px; color: #333; margin-bottom: 20px; }
+
+    input {
+      width: 100%; padding: 14px 16px; margin: 10px 0 5px;
+      border: 1px solid #ccc; border-radius: 12px; font-size: 16px;
+      background: #fff; text-align: center;
+    }
+
+    .verify-box {
+      width: 100%; max-width: 380px; margin: 25px auto;
+      padding: 10px 16px; background: #f8f9fa; border: 1px solid #d4d4d4;
+      border-radius: 8px; font-size: 14px; color: #4a4a4a;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .verify-left { display: flex; align-items: center; gap: 10px; }
+    .spinner {
+      width: 20px; height: 20px;
+      border: 3px solid #4cbb78; border-top-color: transparent;
+      border-radius: 50%; animation: spin 1s linear infinite;
+    }
+    .checkmark {
+      width: 22px; height: 22px; background: #038127;
+      color: white; font-weight: bold; font-size: 15px;
+      border-radius: 50%; display: none;
+      align-items: center; justify-content: center;
+    }
+    #verifyText { font-weight: 500; }
+    .cloudflare-logo img { height: 20px; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    button#submitBtn {
+      width: 50%; padding: 15px 20px; background: #88d1a5;
+      color: white; border: none; border-radius: 12px;
+      font-size: 14px; font-weight: bold;
+      margin: 15px auto 0; cursor: pointer; display: block;
+    }
+
+    .table-box { padding: 85px 0; display: none; }
+
+    .mobile-card {
+      width: 92%; max-width: 380px; margin: 0 auto 30px;
+      padding: 15px; background: #eaf4f0;
+      border: 2px solid #4cbb78; border-radius: 20px; text-align: center;
+    }
+    .mobile-photo { width: 110px; height: 140px; object-fit: cover; border-radius: 8px; }
+    .mobile-card .name { font-size: 15px; color: #222; margin: 8px 0 4px; }
+    .mobile-card .birth { font-size: 15px; color: #333; margin-bottom: 12px; }
+    .district-btn {
+      display: inline-block; background: #4cbb78; color: white;
+      font-weight: bold; font-size: 14px; width: 80px; height: 46px;
+      line-height: 46px; border-radius: 10px;
+    }
+    .mobile-card .address { font-size: 14px; color: #333; line-height: 1.5; margin-top: 12px; }
+
+    .more-button {
+      width: 92%; max-width: 320px; margin: 0 auto;
+      padding: 15px 20px; background: #5cc27b; color: white;
+      border: none; border-radius: 15px; font-size: 14px; font-weight: bold;
+      display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer;
+    }
+
+    .error-message {
+      background: #ffebee;
+      color: #c62828;
+      padding: 12px 20px;
+      margin: 20px auto;
+      max-width: 420px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      display: none;
+    }
+
+    .footer-text {
+      padding: 20px; font-size: 13px; color: #777;
+      background: #fff; width: 100%; flex-shrink: 0; text-align: left;
+    }
+  </style>
 </head>
 <body>
 
-  <div class="main-box">
-    <!-- logo -->
-    <img src="images/cec.webp" alt="Logo" class="logo">
+  <div class="main-content">
+    <div class="main-box">
+      <img src="images/cec.webp" alt="Logo" class="logo">
 
-    <h3>გადაამოწმეთ პირადი მონაცემები და მისამართი ამომრჩეველთა ერთიან სია</h3>
-    <p class="warning">ვებგვერდი განკუთვნილია მხოლოდ ამომრჩეველთათვის - საკუთარი და ოჯახის წევრების მონაცემების გადასამოწმებლად!</p>
-    <p class="bold-date">(17.09.2025 მდგომარეობით)</p>
+      <h3>გადაამოწმეთ პირადი მონაცემები და მისამართი ამომრჩეველთა ერთიან სიაში</h3>
+      <p class="warning">ვებგვერდი განკუთვნილია მხოლოდ ამომრჩეველთათვის - საკუთარი და ოჯახის წევრების მონაცემების გადასამოწმებლად!</p>
+      <p class="bold-date">(01.12.2025 მდგომარეობით)</p>
 
-    <input id="personal" type="text" inputmode="numeric" maxlength="11" placeholder="პირადი ნომერი" autocomplete="off" />
-    <br />
-    <input id="lastname" type="text" placeholder="გვარი" autocomplete="off" />
-    <br />
-<button id="submitBtn" type="button" style="color: white;">ძებნა</button>
+      <input id="personal" type="text" inputmode="numeric" maxlength="11" placeholder="პირადი ნომერი" autocomplete="off">
+      <input id="lastname" type="text" placeholder="გვარი" autocomplete="off">
 
-    <!-- Captcha verification box -->
-    <div class="verify-box" id="verifyBox"> 
-      <div class="spinner" id="spinner"></div>
-      <div class="checkmark" id="checkmark">✓</div>
-      <span id="verifyText">Verifying...</span>
+      <div class="verify-box" id="verifyBox">
+        <div class="verify-left">
+          <div class="spinner" id="spinner"></div>
+          <div class="checkmark" id="checkmark">✓</div>
+          <span id="verifyText">Verifying...</span>
+        </div>
+        <div class="cloudflare-logo">
+          <img src="images/cloudflare.png" alt="Cloudflare">
+        </div>
+      </div>
+      <div class="cf-footer-text"></div>
+
+      <button id="submitBtn">ძებნა</button>
+    </div>
+
+    <div class="error-message" id="errorMessage">
+      მონაცემები ვერ მოიძებნა, გადაამოწმეთ შევსებული ველები!
+    </div>
+
+    <div class="table-box" id="resultBox">
+      <div class="mobile-card">
+        <img id="resultPhoto" src="images/xHz2UHl.png" alt="photo" class="mobile-photo">
+        <p class="name" id="resultName">შურღაია<br>რევაზი</p>
+        <p class="birth" id="resultBirth">07.12.2001</p>
+        <div class="district-btn" id="resultDistrict">07.23</div>
+        <p class="address" id="resultAddress">
+          თბილისი გიორგი ჩუბინაშვილის ქ. N 75 ბ. 6 (ყოფ.<br>ორჯონიკიძის ქ.)
+        </p>
+      </div>
+
+      <button class="more-button">
+        ამ მისამართზე რეგისტრირებულ ამომრჩეველთა სია
+        <span style="margin-left: 10px;">
+          <svg width="18" height="18" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.2939 13.2075H13.3905L13.0703 12.8834C14.191 11.5146 14.8656 9.73756 14.8656 7.80446C14.8656 3.494 11.538 0 7.43282 0C3.32762 0 0 3.494 0 7.80446C0 12.1149 3.32762 15.6089 7.43282 15.6089C9.27387 15.6089 10.9663 14.9005 12.2699 13.7238L12.5786 14.06V15.0086L18.2962 21L20 19.211L14.2939 13.2075ZM7.43282 13.2075C4.58548 13.2075 2.28702 10.7942 2.28702 7.80446C2.28702 4.81475 4.58548 2.40137 7.43282 2.40137C10.2802 2.40137 12.5786 4.81475 12.5786 7.80446C12.5786 10.7942 10.2802 13.2075Z" fill="white"/>
+          </svg>
+        </span>
+      </button>
     </div>
   </div>
 
-  <div class="table-box" id="resultBox">
-    <!-- Desktop table -->
-    <table class="desktop-table">
-      <tr>
-        <th>სურათი</th>
-        <th>გვარი</th>
-        <th>სახელი</th>
-        <th>დაბ.თარიღი</th>
-        <th>ოლქი/უბანი</th>
-        <th>სიაში ნომერი</th>
-        <th>მისამართი</th>
-      </tr>
-      <tr>
-        <td><img src="images/xHz2UHl.png" class="photo" alt="photo"></td>
-        <td>შურღაია</td>
-        <td>რევაზი</td>
-        <td>07.12.2003</td>
-        <td style="background:#a0e8b0;">07.23</td>
-        <td>2380</td>
-        <td>თბილისი გიორგი ჩუბინაშვილის ქ. N 75 ბ. 6 (ყოფ. ორჯონიკიძის ქ.)</td>
-      </tr>
-    </table>
-
- <!-- Mobile card -->
- <div class="mobile-card">
-  <img src="images/xHz2UHl.png" alt="photo" class="mobile-photo">
-  <p class="name">შურღაია</p>
-  <p class="name">რევაზი</p>
-  <p>07.12.2003</p>
-  <p style="color: #4cbb78; font: bold;">ელექტრონული</p>
-  <p class="temo">07.23</p>
-  <p>2380</p>
-
-  <p class="address">
-    თბილისი გიორგი ჩუბინაშვილის ქ. N 75 ბ. 6 (ყოფ. ორჯონიკიძის ქ.)
-  </p>
-</div>
-<div class="container-fluid d-flex align-items-center justify-content-center">
-            <div class="row">
-                <button onclick="toggle()" class="more-button">
-                    ამ მისამართზე რეგისტრირებულ ამომრჩეველთა სია
-                    <span style="margin-left: 20px;">
-                        <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M14.2939 13.2075H13.3905L13.0703 12.8834C14.191 11.5146 14.8656 9.73756 14.8656 7.80446C14.8656 3.494 11.538 0 7.43282 0C3.32762 0 0 3.494 0 7.80446C0 12.1149 3.32762 15.6089 7.43282 15.6089C9.27387 15.6089 10.9663 14.9005 12.2699 13.7238L12.5786 14.06V15.0086L18.2962 21L20 19.211L14.2939 13.2075ZM7.43282 13.2075C4.58548 13.2075 2.28702 10.7942 2.28702 7.80446C2.28702 4.81475 4.58548 2.40137 7.43282 2.40137C10.2802 2.40137 12.5786 4.81475 12.5786 7.80446C12.5786 10.7942 10.2802 13.2075 7.43282 13.2075Z" fill="white"></path>
-                        </svg>
-                    </span>
-                </button>
-            </div>
-        </div>
-
-  <p class="footer-text">© საარჩევნო საამრჩევლო ადმინისტრაცია</p>
+  <div class="footer-text">
+    © საქართველოს საარჩევნო ადმინისტრაცია
+  </div>
 
   <script>
-    // Input validation regex
-    const personalRegex = /^\d{11}$/;
-    const lastnameRegex = /^[ა-ჰA-Za-z]{3,}$/;
-
     const personalInput = document.getElementById('personal');
     const lastnameInput = document.getElementById('lastname');
     const submitBtn = document.getElementById('submitBtn');
     const resultBox = document.getElementById('resultBox');
-
+    const errorMessage = document.getElementById('errorMessage');
+    const resultPhoto = document.getElementById('resultPhoto');
+    const resultName = document.getElementById('resultName');
+    const resultBirth = document.getElementById('resultBirth');
+    const resultDistrict = document.getElementById('resultDistrict');
+    const resultAddress = document.getElementById('resultAddress');
     const spinner = document.getElementById('spinner');
     const checkmark = document.getElementById('checkmark');
     const verifyText = document.getElementById('verifyText');
-    let verificationDone = false;
 
     window.addEventListener('load', () => {
+      setTimeout(startVerification, 2000);
+    });
+
+    function startVerification() {
+      spinner.style.display = "block";
+      checkmark.style.display = "none";
+      verifyText.textContent = "Verifying...";
+      verifyText.style.color = "#4a4a4a";
+
       setTimeout(() => {
         spinner.style.display = "none";
         checkmark.style.display = "flex";
         verifyText.textContent = "Success!";
-        verifyText.style.color = "#4cbb78";
-        verificationDone = true;
+        verifyText.style.color = "#0bbf62";
       }, 2000);
-    });
+    }
 
     personalInput.addEventListener('input', e => {
-      e.target.value = e.target.value.replace(/\D+/g, '').slice(0,11);
+      e.target.value = e.target.value.replace(/\D/g, '').slice(0,11);
     });
     lastnameInput.addEventListener('input', e => {
-      e.target.value = e.target.value.replace(/[^ა-ჰA-Za-z]+/g, '');
+      e.target.value = e.target.value.replace(/[^ა-ჰA-Za-z]/g, '');
     });
 
     submitBtn.addEventListener('click', () => {
-      if (!verificationDone) return;
+      const id = personalInput.value.trim();
+      const lastname = lastnameInput.value.trim();
 
-      const personalVal = personalInput.value.trim();
-      const lastnameVal = lastnameInput.value.trim();
+      resultBox.style.display = 'none';
+      errorMessage.style.display = 'none';
 
-      if (!personalRegex.test(personalVal) || !lastnameRegex.test(lastnameVal)) return;
+      let found = false;
 
-      resultBox.style.display = 'block';
-      resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (id === "01005036879" && lastname === "შურღაია") {
+        resultPhoto.src = "images/luka.png";
+        resultName.innerHTML = "შურღაია<br>ლუკა";
+        resultBirth.textContent = "15.06.2001";
+        resultDistrict.textContent = "07.23";
+        resultAddress.innerHTML = "თბილისი გიორგი ჩუბინაშვილის ქ. N 75 ბ. 6 (ყოფ.<br>ორჯონიკიძის ქ.)";
+        found = true;
+      }
+      else if (id === "01954001457" && lastname === "ჯილოვიანი") {
+        resultPhoto.src = "images/temo.png";
+        resultName.innerHTML = "ჯილოვიანი<br>თემურ";
+        resultBirth.textContent = "16.02.2003";
+        resultDistrict.textContent = "05.25";
+        resultAddress.innerHTML = "გიგანტი .ფონიჭალას რაიონი (ყოფ.<br>რუსთავი ქ.)";
+        found = true;
+      }
+      else if (id === "01654002309" && lastname === "ფერაძე") {
+        resultPhoto.src = "images/ninia.png";
+        resultName.innerHTML = "ფერაძე<br>ნინია";
+        resultBirth.textContent = "19.10.2003";
+        resultDistrict.textContent = "02.11";
+        resultAddress.innerHTML = "თბილისი ივანე ჯავახიშვილის ქ. ვერა N 12 ბ.9";
+        found = true;
+      }
+
+      if (found) {
+        resultBox.style.display = 'block';
+        resultBox.scrollIntoView({behavior: 'smooth'});
+        personalInput.value = "";
+        lastnameInput.value = "";
+      } else {
+        errorMessage.style.display = 'block';
+        startVerification();
+      }
     });
 
-    [personalInput, lastnameInput].forEach(input => {
-      input.addEventListener('keydown', e => {
+    [personalInput, lastnameInput].forEach(el => {
+      el.addEventListener('keydown', e => {
         if (e.key === 'Enter') submitBtn.click();
       });
     });
   </script>
 </body>
-</html> 
+</html>
