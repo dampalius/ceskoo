@@ -163,96 +163,105 @@
     © საქართველოს საარჩევნო ადმინისტრაცია
   </div>
 
-  <script>
-    const personalInput = document.getElementById('personal');
-    const lastnameInput = document.getElementById('lastname');
-    const submitBtn = document.getElementById('submitBtn');
-    const resultBox = document.getElementById('resultBox');
-    const errorMessage = document.getElementById('errorMessage');
-    const resultPhoto = document.getElementById('resultPhoto');
-    const resultName = document.getElementById('resultName');
-    const resultBirth = document.getElementById('resultBirth');
-    const resultDistrict = document.getElementById('resultDistrict');
-    const resultAddress = document.getElementById('resultAddress');
-    const spinner = document.getElementById('spinner');
-    const checkmark = document.getElementById('checkmark');
-    const verifyText = document.getElementById('verifyText');
+ <script>
+  const personalInput = document.getElementById('personal');
+  const lastnameInput = document.getElementById('lastname');
+  const submitBtn = document.getElementById('submitBtn');
+  const resultBox = document.getElementById('resultBox');
+  const errorMessage = document.getElementById('errorMessage');
+  const resultPhoto = document.getElementById('resultPhoto');
+  const resultName = document.getElementById('resultName');
+  const resultBirth = document.getElementById('resultBirth');
+  const resultDistrict = document.getElementById('resultDistrict');
+  const resultAddress = document.getElementById('resultAddress');
+  const spinner = document.getElementById('spinner');
+  const checkmark = document.getElementById('checkmark');
+  const verifyText = document.getElementById('verifyText');
 
-    window.addEventListener('load', () => {
-      setTimeout(startVerification, 2000);
-    });
+  window.addEventListener('load', () => {
+    setTimeout(startVerification, 2000);
+  });
 
-    function startVerification() {
-      spinner.style.display = "block";
-      checkmark.style.display = "none";
-      verifyText.textContent = "Verifying...";
-      verifyText.style.color = "#4a4a4a";
+  function startVerification() {
+    spinner.style.display = "block";
+    checkmark.style.display = "none";
+    verifyText.textContent = "Verifying...";
+    verifyText.style.color = "#4a4a4a";
 
-      setTimeout(() => {
-        spinner.style.display = "none";
-        checkmark.style.display = "flex";
-        verifyText.textContent = "Success!";
-        verifyText.style.color = "#0bbf62";
-      }, 2000);
+    setTimeout(() => {
+      spinner.style.display = "none";
+      checkmark.style.display = "flex";
+      verifyText.textContent = "Success!";
+      verifyText.style.color = "#0bbf62";
+    }, 2000);
+  }
+
+  personalInput.addEventListener('input', e => {
+    e.target.value = e.target.value.replace(/\D/g, '').slice(0,11);
+  });
+  lastnameInput.addEventListener('input', e => {
+    e.target.value = e.target.value.replace(/[^ა-ჰA-Za-z]/g, '');
+  });
+
+  submitBtn.addEventListener('click', () => {
+    const id = personalInput.value.trim();
+    const lastname = lastnameInput.value.trim();
+
+    resultBox.style.display = 'none';
+    errorMessage.style.display = 'none';
+
+    let found = false;
+
+    if (id === "01005036879" && lastname === "შურღაია") {
+      resultPhoto.src = "images/luka.png";
+      resultName.innerHTML = "შურღაია<br>ლუკა";
+      resultBirth.textContent = "15.06.2001";
+      resultDistrict.textContent = "07.23";
+      resultAddress.innerHTML = "თბილისი გიორგი ჩუბინაშვილის ქ. N 75 ბ. 6 (ყოფ.<br>ორჯონიკიძის ქ.)";
+      found = true;
+    }
+    else if (id === "01954001457" && lastname === "ჯილოვიანი") {
+      resultPhoto.src = "images/temo.png";
+      resultName.innerHTML = "ჯილოვიანი<br>თემურ";
+      resultBirth.textContent = "16.02.2003";
+      resultDistrict.textContent = "05.25";
+      resultAddress.innerHTML = "გიგანტი .ფონიჭალას რაიონი (ყოფ.<br>რუსთავი ქ.)";
+      found = true;
+    }
+    else if (id === "01654002309" && lastname === "ფერაძე") {
+      resultPhoto.src = "images/ninia.png";
+      resultName.innerHTML = "ფერაძე<br>ნინია";
+      resultBirth.textContent = "19.10.2003";
+      resultDistrict.textContent = "02.11";
+      resultAddress.innerHTML = "თბილისი ივანე ჯავახიშვილის ქ. ვერა N 12 ბ.9";
+      found = true;
+    }
+    // === NEW ENTRY ===
+    else if (id === "41350000053" && lastname === "ცირეკიძე") {
+      resultPhoto.src = "images/taso.png";
+      resultName.innerHTML = "ცირეკიძე<br>ანასტასია";
+      resultBirth.textContent = "18.08.2003";
+      resultDistrict.textContent = "09.15";
+      resultAddress.innerHTML = "თბილისი აკაკი წერეთელი ქ. N 12 ბ.9";
+      found = true;
     }
 
-    personalInput.addEventListener('input', e => {
-      e.target.value = e.target.value.replace(/\D/g, '').slice(0,11);
+    if (found) {
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({behavior: 'smooth'});
+      personalInput.value = "";
+      lastnameInput.value = "";
+    } else {
+      errorMessage.style.display = 'block';
+      startVerification();
+    }
+  });
+
+  [personalInput, lastnameInput].forEach(el => {
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter') submitBtn.click();
     });
-    lastnameInput.addEventListener('input', e => {
-      e.target.value = e.target.value.replace(/[^ა-ჰA-Za-z]/g, '');
-    });
-
-    submitBtn.addEventListener('click', () => {
-      const id = personalInput.value.trim();
-      const lastname = lastnameInput.value.trim();
-
-      resultBox.style.display = 'none';
-      errorMessage.style.display = 'none';
-
-      let found = false;
-
-      if (id === "01005036879" && lastname === "შურღაია") {
-        resultPhoto.src = "images/luka.png";
-        resultName.innerHTML = "შურღაია<br>ლუკა";
-        resultBirth.textContent = "15.06.2001";
-        resultDistrict.textContent = "07.23";
-        resultAddress.innerHTML = "თბილისი გიორგი ჩუბინაშვილის ქ. N 75 ბ. 6 (ყოფ.<br>ორჯონიკიძის ქ.)";
-        found = true;
-      }
-      else if (id === "01954001457" && lastname === "ჯილოვიანი") {
-        resultPhoto.src = "images/temo.png";
-        resultName.innerHTML = "ჯილოვიანი<br>თემურ";
-        resultBirth.textContent = "16.02.2003";
-        resultDistrict.textContent = "05.25";
-        resultAddress.innerHTML = "გიგანტი .ფონიჭალას რაიონი (ყოფ.<br>რუსთავი ქ.)";
-        found = true;
-      }
-      else if (id === "01654002309" && lastname === "ფერაძე") {
-        resultPhoto.src = "images/ninia.png";
-        resultName.innerHTML = "ფერაძე<br>ნინია";
-        resultBirth.textContent = "19.10.2003";
-        resultDistrict.textContent = "02.11";
-        resultAddress.innerHTML = "თბილისი ივანე ჯავახიშვილის ქ. ვერა N 12 ბ.9";
-        found = true;
-      }
-
-      if (found) {
-        resultBox.style.display = 'block';
-        resultBox.scrollIntoView({behavior: 'smooth'});
-        personalInput.value = "";
-        lastnameInput.value = "";
-      } else {
-        errorMessage.style.display = 'block';
-        startVerification();
-      }
-    });
-
-    [personalInput, lastnameInput].forEach(el => {
-      el.addEventListener('keydown', e => {
-        if (e.key === 'Enter') submitBtn.click();
-      });
-    });
-  </script>
+  });
+</script>
 </body>
 </html>
