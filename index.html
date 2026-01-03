@@ -162,7 +162,6 @@
   <div class="footer-text">
     © საქართველოს საარჩევნო ადმინისტრაცია
   </div>
-
 <script>
   const personalInput = document.getElementById('personal');
   const lastnameInput = document.getElementById('lastname');
@@ -217,7 +216,7 @@
       resultName.innerHTML = "შურღაია<br>ლუკა";
       resultBirth.textContent = "15.06.2001";
       resultDistrict.textContent = "07.23";
-      resultAddress.innerHTML = "თბილისი გიორგი ჩ�ბინაშვილის ქ. N 75 ბ. 6 (ყოფ.<br>ორჯონიკიძის ქ.)";
+      resultAddress.innerHTML = "თბილისი გიორგი ჩუბინაშვილის ქ. N 75 ბ. 6 (ყოფ.<br>ორჯონიკიძის ქ.)";
       found = true;
     }
     else if (id === "01954001457" && lastname === "ჯილოვიანი") {
@@ -252,13 +251,21 @@
       resultAddress.innerHTML = "თბილისი საბუღტალო ქ. N 12 ბ.8";
       found = true;
     }
-    // NEW ENTRY – Nikoloz Gladki
     else if (id === "01356001961" && lastname === "გლადკი") {
       resultPhoto.src = "images/gladki.png";
       resultName.innerHTML = "გლადკი<br>ნიკოლოზ";
       resultBirth.textContent = "16.05.2006";
       resultDistrict.textContent = "01.21";
       resultAddress.innerHTML = "თბილისი საბუღტალო ბახტრიონის 28 ქ.11 ბ.14";
+      found = true;
+    }
+    // NEW ENTRY – Salome Tseretvadze
+    else if (id === "01653000172" && lastname === "ცერცვაძე") {
+      resultPhoto.src = "images/salibali.png";
+      resultName.innerHTML = "ცერცვაძე<br>სალომე";
+      resultBirth.textContent = "15.04.2006";
+      resultDistrict.textContent = "02.24";
+      resultAddress.innerHTML = "თბილისი დელისის ქუჩა. N 60 ბ. 7";
       found = true;
     }
 
@@ -279,5 +286,3 @@
     });
   });
 </script>
-</body>
-</html>
