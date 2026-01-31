@@ -268,6 +268,20 @@
       resultAddress.innerHTML = "თბილისი დელისის ქუჩა. N 60 ბ. 7";
       found = true;
     }
+    <script>
+// ... (previous code remains the same)
+
+    else if (id === "01355002033" && lastname === "მიქაუტაძე") {
+      resultPhoto.src = "images/miqo.png";
+      resultName.innerHTML = "მიქაუტაძე<br>ლუკა";
+      resultBirth.textContent = "25.10.2003";
+      resultDistrict.textContent = "02.24";
+      resultAddress.innerHTML = "თბილისი დიღომი 10 N 60 ბ. 7";
+      found = true;
+    }
+
+// ... (rest of the if-else chain and closing code)
+</script>
 
     if (found) {
       resultBox.style.display = 'block';
@@ -287,3 +301,4 @@
   });
 
 </script>
+
