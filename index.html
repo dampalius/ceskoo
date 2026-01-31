@@ -256,10 +256,9 @@
       resultName.innerHTML = "გლადკი<br>ნიკოლოზ";
       resultBirth.textContent = "16.05.2006";
       resultDistrict.textContent = "01.21";
-      resultAddress.innerHTML = "თბილისი საბურთალო ბახტრიონის 28 ქ.11 ბ.14";
+      resultAddress.innerHTML = "თბილისი საბუღტალო ბახტრიონის 28 ქ.11 ბ.14";
       found = true;
     }
-    // NEW ENTRY – Salome Tseretvadze
     else if (id === "01653000172" && lastname === "ცერცვაძე") {
       resultPhoto.src = "images/salibali.png";
       resultName.innerHTML = "ცერცვაძე<br>სალომე";
@@ -268,18 +267,14 @@
       resultAddress.innerHTML = "თბილისი დელისის ქუჩა. N 60 ბ. 7";
       found = true;
     }
-
     else if (id === "01355002033" && lastname === "მიქაუტაძე") {
-      resultPhoto.src = "images/IMG_6617.png";
+      resultPhoto.src = "images/miqo.png";
       resultName.innerHTML = "მიქაუტაძე<br>ლუკა";
       resultBirth.textContent = "25.10.2003";
       resultDistrict.textContent = "02.24";
       resultAddress.innerHTML = "თბილისი დიღომი 10 N 60 ბ. 7";
       found = true;
     }
-
-// ... (rest of the if-else chain and closing code)
-</script>
 
     if (found) {
       resultBox.style.display = 'block';
@@ -297,8 +292,6 @@
       if (e.key === 'Enter') submitBtn.click();
     });
   });
-
 </script>
-
 
 
