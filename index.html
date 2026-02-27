@@ -275,6 +275,18 @@
       resultAddress.innerHTML = "თბილისი დიღომი 10 N 60 ბ. 7";
       found = true;
     }
+    // ... (all previous constants and functions unchanged)
+
+    else if (id === "01951004371" && lastname === "ხორავა") {
+      resultPhoto.src = "images/akaki.png";
+      resultName.innerHTML = "ხორავა<br>აკაკი";
+      resultBirth.textContent = "01.07.2006";
+      resultDistrict.textContent = "09.14";
+      resultAddress.innerHTML = "თბილისი დიღომი 10 N 60 ბ. 7";
+      found = true;
+    }
+
+// ... (if (found) { ... } else { ... } and closing brackets unchanged)
 
     if (found) {
       resultBox.style.display = 'block';
@@ -293,6 +305,7 @@
     });
   });
 </script>
+
 
 
 
